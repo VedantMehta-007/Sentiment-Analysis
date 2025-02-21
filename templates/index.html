@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Sentiment Analysis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>YouTube Sentiment Analysis</h1>
+    
+    <form method="POST" action="/">
+        <label for="video_url">Enter YouTube video URL:</label>
+        <input type="text" id="video_url" name="video_url" placeholder="https://youtu.be/xyz" required pattern="https:\/\/(www\.)?(youtube|youtu|youtube-nocookie)\.(com|be)\/(watch\?v=|embed\/)([a-zA-Z0-9_-]+)">
+        <button type="submit">Analyze Sentiment</button>
+    </form>
+
+    {% if error %}
+        <p style="color:red;">{{ error }}</p>
+    {% endif %}
+
+    {% if tables %}
+        <h2>Sentiment Analysis Results:</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Comment</th>
+                    <th>Sentiment</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in tables %}
+                <tr>
+                    <td>{{ row.comment }}</td>
+                    <td>{{ row.sentiment }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</body>
+</html>
